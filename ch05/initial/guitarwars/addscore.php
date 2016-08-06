@@ -14,13 +14,14 @@
     // Grab the score data from the POST
     $name = $_POST['name'];
     $score = $_POST['score'];
+    $screenshot = $_FILES['screenshot']['name'];
 
     if (!empty($name) && !empty($score)) {
       // Connect to the database
       $dbc = mysqli_connect('localhost', 'root', '', 'gwdb');
 
       // Write the data to the database
-      $query = "INSERT INTO guitarwars VALUES (0, NOW(), '$name', '$score')";
+      $query = "INSERT INTO guitarwars VALUES (0, NOW(), '$name', '$score', '$screenshot')";
       mysqli_query($dbc, $query);
 
       // Confirm success with the user

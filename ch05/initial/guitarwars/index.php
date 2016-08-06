@@ -27,6 +27,11 @@
     echo '<span class="score">' . $row['score'] . '</span><br />';
     echo '<strong>Name:</strong> ' . $row['name'] . '<br />';
     echo '<strong>Date:</strong> ' . $row['date'] . '</td></tr>';
+    if (is_file($row['screenshot']) && filesize($row['screenshot']) > 0) {
+      echo '<td><img src="' . $row['screenshot'] . '" alt="Подтверждено" /></td></tr>';
+    } else {
+      echo '<td><img src="unverified.gif" alt="НЕ Подтверждено" /></td></tr>';
+    }
   }
   echo '</table>';
 
