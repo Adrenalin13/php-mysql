@@ -10,33 +10,41 @@
   <h2>Гитарные войны - Добавьте свой рейтинг</h2>
 
 <?php
+  
+  // инициализация константы, содержащей имя каталога для загруженного файла изображений
+  define('GW_UPLOADPATH', 'images/');
+
   if (isset($_POST['submit'])) {
     // Grab the score data from the POST
     $name = $_POST['name'];
     $score = $_POST['score'];
     $screenshot = $_FILES['screenshot']['name'];
 
-    if (!empty($name) && !empty($score)) {
-      // Connect to the database
-      $dbc = mysqli_connect('localhost', 'root', '', 'gwdb');
+    if (!empty($name) && !empty($score) && !empty($screenshot)) {
+      // Перемещение файла в постоянный каталог для изображений
+      $target = GW_UPLOADPATH . $screenshot;
+      if (move_uploaded_file($_FILES['screenshot']['tmp_name'], $target)) {
+        // Connect to the database
+        $dbc = mysqli_connect('localhost', 'root', '', 'gwdb');
 
-      // Write the data to the database
-      $query = "INSERT INTO guitarwars VALUES (0, NOW(), '$name', '$score', '$screenshot')";
-      mysqli_query($dbc, $query);
+        // Write the data to the database
+        $query = "INSERT INTO guitarwars VALUES (0, NOW(), '$name', '$score', '$screenshot')";
+        mysqli_query($dbc, $query);
 
-      // Confirm success with the user
-      echo '<p>Спасибо что добавили свой рейтинг!</p>';
-      echo '<p><strong>Имя:</strong> ' . $name . '<br />';
-      echo '<strong>Рейтинг:</strong> ' . $score . '</p>';
-      echo '<p><a href="index.php">&lt;&lt; Назад к списку рейтингов</a></p>';
+        // Confirm success with the user
+        echo '<p>Спасибо что добавили свой рейтинг!</p>';
+        echo '<p><strong>Имя:</strong> ' . $name . '<br />';
+        echo '<strong>Рейтинг:</strong> ' . $score . '</p>';
+        echo '<img src="' . GW_UPLOADPATH . $screenshot . '" alt="Изображение, подтверждающее подлинность рейтинга. /><br>"';
+        echo '<p><a href="index.php">&lt;&lt; Назад к списку рейтингов</a></p>';
 
-      // Clear the score data to clear the form
-      $name = "";
-      $score = "";
+        // Clear the score data to clear the form
+        $name = "";
+        $score = "";
 
-      mysqli_close($dbc);
+        mysqli_close($dbc);
     }
-    else {
+  } else {
       echo '<p class="error">Введите, пожалуйста, всю информацию, необходимую для добавления вашего рейтинга.</p>';
     }
   }
