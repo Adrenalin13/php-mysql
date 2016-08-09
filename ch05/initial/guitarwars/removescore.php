@@ -1,11 +1,12 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN"
+    "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="ru" lang="ru">
 <head>
-    <meta http-equiv="Content-Type" content="text/html"; charset="utf-8"/>
+    <meta http-equiv="Content-Type" content="text/html" ; charset="utf-8"/>
     <title>Гитарные войны. Удаление рейтинга</title>
 </head>
 <body>
-    <h2>Гитарные войны. Удаление рейтинга</h2>
-
+<h2>Гитарные войны. Удаление рейтинга</h2>
 
 
 <?php
@@ -20,7 +21,7 @@ if (isset($_GET['id']) && isset($_GET['date']) && isset($_GET['name']) && isset(
     $name = $_GET['name'];
     $score = $_GET['score'];
     $screenshot = $_GET['screenshot'];
-} elseif (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['score'])) {
+} else if (isset($_POST['id']) && isset($_POST['name']) && isset($_POST['score'])) {
     // извлечение данных рейтинга из суперглобального массива $_POST
     $id = $_POST['id'];
     $name = $_POST['name'];
@@ -46,10 +47,11 @@ if (isset($_POST['submit'])) {
     } else {
         echo '<p class="error">Рейтинг не удален...</p>';
     }
-} elseif (isset($id) && isset($name) && isset($date) && isset($score)) {
+} else if (isset($id) && isset($name) && isset($date) && isset($score)) {
     echo '<p>Вы уверены что желаете удалить данный рейтинг?</p>';
-    echo '<p><strong>Имя: </strong>' . $name . '<br><strong>Дата: </strong>' . $date . '<br><strong>Рейтинг: </strong>' . $score . '</p>';
-    echo '<form metod="POST" action="removescore.php">';
+    echo '<p><strong>Имя: </strong>' . $name . '<br><strong>Дата: </strong>' . $date .
+        '<br><strong>Рейтинг: </strong>' . $score . '</p>';
+    echo '<form method="POST" action="removescore.php">';
     echo '<input type="radio" name="confirm" value="Да"/>Да';
     echo '<input type="radio" name="confirm" value="Нет" checked="checked"/>Нет<br>';
     echo '<input type="submit" value="Удалить" name="submit"/>';
@@ -59,7 +61,7 @@ if (isset($_POST['submit'])) {
     echo '</form>';
 }
 
-    echo '<p><a href="admin.php">&lt;&lt; Назад к списку рейтингов </a></p>';
+echo '<p><a href="admin.php">&lt;&lt; Назад к списку рейтингов </a></p>';
 
 
 ?>
