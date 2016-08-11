@@ -32,7 +32,7 @@ if (isset($_POST['submit'])) {
                     $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
                     // Write the data to the database
-                    $query = "INSERT INTO guitarwars VALUES (0, NOW(), '$name', '$score', '$screenshot')";
+                    $query = "INSERT INTO guitarwars VALUES (0, NOW(), '$name', '$score', '$screenshot', 0)";
                     mysqli_query($dbc, $query);
 
                     // Confirm success with the user
