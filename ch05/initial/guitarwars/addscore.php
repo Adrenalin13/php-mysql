@@ -16,13 +16,13 @@ require_once('connectvars.php');
 
 if (isset($_POST['submit'])) {
     // Grab the score data from the POST
-    $name = $_POST['name'];
-    $score = $_POST['score'];
-    $screenshot = $_FILES['screenshot']['name'];
+    @$name = mysqli_real_escape_string($dbc, trim($_POST['name'])) ; // trim() удаляет пробелы перед и после значения
+    @$score = mysqli_real_escape_string($dbc, trim($_POST['score'])); 
+    @$screenshot = mysqli_real_escape_string($dbc, trim($_FILES['screenshot']['name']));
     $screenshot_size = $_FILES['screenshot']['size'];
     $screenshot_type = $_FILES['screenshot']['type'];
 
-    if (!empty($name) && !empty($score) && !empty($screenshot)) {
+    if (!empty($name) && is_numeric($score) && !empty($screenshot)) {
         if ((($screenshot_type == 'image/png') || ($screenshot_type == 'image/jpeg') || ($screenshot_type == 'image/gif') || ($screenshot_type == 'image/pjpeg')) && ($screenshot_size > 0) && ($screenshot_size <= GW_MAXFILESIZE)) {
             if ($_FILES['screenshot']['error'] == 0) {
                 // Перемещение файла в постоянный каталог для изображений
@@ -31,8 +31,8 @@ if (isset($_POST['submit'])) {
                     // Connect to the database
                     $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME);
 
-                    // Write the data to the database
-                    $query = "INSERT INTO guitarwars VALUES (0, NOW(), '$name', '$score', '$screenshot', 0)";
+                    // Запись данных в ДБ с сокрытием ID и approved (чтобы не провели SQL-injection) 
+                    $query = "INSERT INTO guitarwars (date, name, score, screenshot) VALUES (NOW(), '$name', '$score', '$screenshot')";
                     mysqli_query($dbc, $query);
 
                     // Confirm success with the user
