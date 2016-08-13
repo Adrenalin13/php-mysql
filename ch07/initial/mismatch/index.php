@@ -3,29 +3,29 @@
 <html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en" lang="en">
 <head>
   <meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-  <title>Mismatch - Where opposites attract!</title>
+  <title>Несоответствие - Где противоположности привлекают!</title>
   <link rel="stylesheet" type="text/css" href="style.css" />
 </head>
 <body>
-  <h3>Mismatch - Where opposites attract!</h3>
+  <h3>Несоответствие - Где противоположности привлекают!</h3>
 
 <?php
   require_once('appvars.php');
   require_once('connectvars.php');
 
-  // Generate the navigation menu
-  echo '&#10084; <a href="viewprofile.php">View Profile</a><br />';
-  echo '&#10084; <a href="editprofile.php">Edit Profile</a><br />';
+  // Создание меню переходов
+  echo '&#10084; <a href="viewprofile.php">Посмотреть профиль</a><br />';
+  echo '&#10084; <a href="editprofile.php">Изменить профиль</a><br />';
 
-  // Connect to the database 
+  // Подключитесь к базе данных 
   $dbc = mysqli_connect(DB_HOST, DB_USER, DB_PASSWORD, DB_NAME); 
 
-  // Retrieve the user data from MySQL
+  // Извлечение пользовательских данных из MySQL
   $query = "SELECT user_id, first_name, picture FROM mismatch_user WHERE first_name IS NOT NULL ORDER BY join_date DESC LIMIT 5";
   $data = mysqli_query($dbc, $query);
 
-  // Loop through the array of user data, formatting it as HTML
-  echo '<h4>Latest members:</h4>';
+  // Выполните цикл по массиву данных пользователя, форматирование в виде HTML
+  echo '<h4>Последние участники:</h4>';
   echo '<table>';
   while ($row = mysqli_fetch_array($data)) {
     if (is_file(MM_UPLOADPATH . $row['picture']) && filesize(MM_UPLOADPATH . $row['picture']) > 0) {
